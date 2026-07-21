@@ -108,3 +108,4 @@ Refer the below screenshot for the stages in the pipeline
 
 Image Malware scanning - [ClamAV](https://github.com/openbridge/clamav)
 Trigger the image build
+Trigger the image build
