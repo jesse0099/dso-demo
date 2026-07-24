@@ -18,12 +18,26 @@ pipeline {
         }
       }
     }
-    stage('Test') {
+    stage('SCA') {
       parallel {
         stage('Unit Tests') {
           steps {
             container('maven') {
               sh 'mvn test'
+            }
+          }
+          stage('') {
+            steps {
+              container('maven') {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                  sh 'mvn org.owasp:dependency-check-maven:check'
+                }
+                post {
+                  always {
+                    archiveArtifacts allowEmptyArchive: true, artifacts: 'target/dependency-check-report.html', fingerprint: true, onlyIfSuccessful: true
+                  }
+                }
+              }
             }
           }
         }
@@ -41,7 +55,7 @@ pipeline {
 
         stage('OCI Image BnP') {
           steps {
-            container ('kaniko') {
+            container('kaniko') {
               sh '/kaniko/executor -f `pwd`/Dockerfile -c `pwd` --insecure --skip-tls-verify --cache=true --destination=docker.io/jese69/dso-demo --force'
             }
           }
@@ -51,7 +65,7 @@ pipeline {
     stage('Deploy to Dev') {
       steps {
         // TODO
-        sh "echo done"
+        sh 'echo done'
       }
     }
   }
