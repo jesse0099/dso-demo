@@ -18,7 +18,7 @@ pipeline {
         }
       }
     }
-    stage('SCA') {
+    stage('Static Analysis') {
       parallel {
         stage('Unit Tests') {
           steps {
@@ -26,7 +26,7 @@ pipeline {
               sh 'mvn test'
             }
           }
-          stage('') {
+          stage('SCA') {
             steps {
               container('maven') {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
