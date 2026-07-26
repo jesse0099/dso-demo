@@ -10,6 +10,11 @@ controller:
   
   # 1. Expose the Kubernetes secret as an environment variable on the controller pod
   containerEnv:
+    - name: OWASPDEPTRACK_API_KEY
+      valueFrom:
+        secretKeyRef:
+          name: owaspdeptrack-api-secret
+          key: OWASPDEPTRACK_API_KEY
     - name: NVD_API_KEY
       valueFrom:
         secretKeyRef:
@@ -30,6 +35,11 @@ controller:
           system:
             domainCredentials:
               - credentials:
+                  - string:
+                      scope: GLOBAL
+                      id: "owasp-dep-track-api-key"
+                      secret: "${OWASPDEPTRACK_API_KEY}"
+                      description: "API Key for OWASP Dependency-track"
                   - string:
                       scope: GLOBAL
                       id: "nvd-api-key"
