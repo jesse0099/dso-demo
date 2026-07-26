@@ -1,0 +1,18 @@
+ingress:
+  enabled: false
+
+frontend:
+  replicaCount: 1
+  service:
+    type: ClusterIP
+  # This is the correct parameter for the Dependency-Track community chart
+  apiBaseUrl: "http://localhost:4040"
+
+apiserver:
+  resources:
+    requests:
+      cpu: 1
+      memory: 3000Mi
+    limits:
+      cpu: 2
+      memory: 7Gi
