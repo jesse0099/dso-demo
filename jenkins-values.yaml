@@ -15,6 +15,11 @@ controller:
         secretKeyRef:
           name: nvd-api-secret
           key: NVD_API_KEY
+    - name: GITHUB_TOKEN
+      valueFrom:
+        secretKeyRef:
+          name: github-api-secret
+          key: GITHUB_TOKEN
           
   JCasC:
     defaultConfig: true
@@ -30,3 +35,9 @@ controller:
                       id: "nvd-api-key"
                       secret: "${NVD_API_KEY}"
                       description: "NVD API Key for OWASP Dependency-Check"
+                  - usernamePassword:
+                      scope: GLOBAL
+                      id: "github-pat"
+                      username: "jesse0099"
+                      password: "${GITHUB_TOKEN}"
+                      description: "GitHub PAT for Branch Indexing"
