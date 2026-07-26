@@ -1,0 +1,32 @@
+controller:
+  serviceType: NodePort # Util para aquellos que esten utilizando un proveedor de nube para su cluster y quieran acceso a la ui de jenkins
+  resources:                                                                                                                                                                                 
+    requests:                                                                                                                                                                                
+      cpu: "400m"                                                                                                                                                                             
+      memory: "512Mi"                                                                                                                                                                        
+    limits:                                                                                                                                                                                  
+      cpu: "2000m" 
+      memory: "4096Mi"
+  
+  # 1. Expose the Kubernetes secret as an environment variable on the controller pod
+  containerEnv:
+    - name: NVD_API_KEY
+      valueFrom:
+        secretKeyRef:
+          name: nvd-api-secret
+          key: <>
+
+  JCasC:
+    defaultConfig: true
+    # 2. Tell Jenkins to securely map that environment variable to a Credential ID
+    configScripts:
+      nvd-credentials: |
+        credentials:
+          system:
+            domainCredentials:
+              - credentials:
+                  - string:
+                      scope: GLOBAL
+                      id: "nvd-api-key"
+                      secret: "${NVD_API_KEY}"
+                      description: "NVD API Key for OWASP Dependency-Check"
