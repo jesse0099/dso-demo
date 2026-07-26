@@ -6,6 +6,7 @@ pipeline {
       idleMinutes 1
     }
   }
+
   stages {
     stage('Build') {
       parallel {
@@ -18,6 +19,7 @@ pipeline {
         }
       }
     }
+
     stage('Static Analysis') {
       parallel {
         stage('Unit Tests') {
@@ -29,10 +31,20 @@ pipeline {
         }
 
         stage('SCA') {
+          options {
+            retry(2)
+            timeout(time: 25, unit: 'MINUTES')
+          }
           steps {
             container('maven') {
-              catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                sh 'mvn org.owasp:dependency-check-maven:check'
+              withCredentials([string(credentialsId: 'nvd-api-key', variable: 'NVD_API_KEY')]) {
+                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                  sh '''
+                    mvn -B -ntp org.owasp:dependency-check-maven:10.0.3:check \
+                      -DnvdApiKey=$NVD_API_KEY \
+                      -DfailOnError=false
+                  '''
+                }
               }
             }
           }
@@ -42,8 +54,23 @@ pipeline {
             }
           }
         }
+
+        stage('OSS LicenseChecker') {
+          steps {
+            container('licensefinder') {
+              sh 'ls -al'
+              sh '''#!/bin/bash --login
+                      /bin/bash --login
+                      rvm use default
+                      gem install license_finder
+                      license_finder
+                   '''
+            }
+          }
+        }
       }
     }
+
     stage('Package') {
       parallel {
         stage('Create Jarfile') {
@@ -63,6 +90,7 @@ pipeline {
         }
       }
     }
+
     stage('Deploy to Dev') {
       steps {
         // TODO
