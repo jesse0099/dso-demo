@@ -14,8 +14,8 @@ controller:
       valueFrom:
         secretKeyRef:
           name: nvd-api-secret
-          key: <>
-
+          key: NVD_API_KEY
+          
   JCasC:
     defaultConfig: true
     # 2. Tell Jenkins to securely map that environment variable to a Credential ID
