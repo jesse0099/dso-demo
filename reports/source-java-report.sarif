@@ -1,0 +1,84 @@
+{
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "Java Source Analyzer",
+          "version": "1.0.0-scan",
+          "fullName": "Java Source Analyzer"
+        }
+      },
+      "conversion": {
+        "tool": {
+          "driver": {
+            "name": "@ShiftLeft/sast-scan"
+          }
+        },
+        "invocation": {
+          "arguments": [
+            "pmd",
+            "--no-cache",
+            "--fail-on-violation",
+            "false",
+            "-language",
+            "java",
+            "-d",
+            "/app",
+            "-r",
+            "/app/reports/source-java-report.csv",
+            "-f",
+            "csv",
+            "-R",
+            "/usr/local/src/lib/../rules-pmd.xml"
+          ],
+          "executionSuccessful": true,
+          "commandLine": "pmd --no-cache --fail-on-violation false -language java -d /app -r /app/reports/source-java-report.csv -f csv -R /usr/local/src/lib/../rules-pmd.xml",
+          "endTimeUtc": "2026-08-06T03:15:04Z",
+          "workingDirectory": {
+            "uri": "file:///home/greentea/Documents/NicaSecurity/DevSecOps/dso-demo"
+          }
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true,
+          "endTimeUtc": "2026-08-06T03:15:04Z",
+          "workingDirectory": {
+            "uri": "file:///home/greentea/Documents/NicaSecurity/DevSecOps/dso-demo"
+          }
+        }
+      ],
+      "properties": {
+        "metrics": {
+          "total": 0,
+          "critical": 0,
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "results": [],
+      "automationDetails": {
+        "description": {
+          "text": "Static Analysis Security Test results using @ShiftLeft/sast-scan"
+        },
+        "guid": "88dd3482-4009-43e8-ac65-a863f65afb3d"
+      },
+      "versionControlProvenance": [
+        {
+          "branch": "main",
+          "repositoryUri": "https://github.com/jesse0099/dso-demo",
+          "revisionId": "febaaa309ef8cc0da7e5d3bf81f121610f41108b"
+        }
+      ]
+    }
+  ],
+  "version": "2.1.0",
+  "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
+  "inlineExternalProperties": [
+    {
+      "guid": "88dd3482-4009-43e8-ac65-a863f65afb3d",
+      "runGuid": "c4212b57-8e2e-4b07-b506-db0d2454d704"
+    }
+  ]
+}

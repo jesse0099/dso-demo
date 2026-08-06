@@ -1,0 +1,75 @@
+{
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "Secrets Audit",
+          "version": "1.0.0-scan",
+          "fullName": "Secrets Audit"
+        }
+      },
+      "conversion": {
+        "tool": {
+          "driver": {
+            "name": "@ShiftLeft/sast-scan"
+          }
+        },
+        "invocation": {
+          "arguments": [
+            "--config-path=/usr/local/src/lib/../credscan-config.toml",
+            "--path=/app",
+            "--leaks-exit-code=0",
+            "--no-git",
+            "--report=/app/reports/credscan-report.json"
+          ],
+          "executionSuccessful": true,
+          "commandLine": "--config-path=/usr/local/src/lib/../credscan-config.toml --path=/app --leaks-exit-code=0 --no-git --report=/app/reports/credscan-report.json",
+          "endTimeUtc": "2026-08-06T03:14:59Z",
+          "workingDirectory": {
+            "uri": "file:///home/greentea/Documents/NicaSecurity/DevSecOps/dso-demo"
+          }
+        }
+      },
+      "invocations": [
+        {
+          "executionSuccessful": true,
+          "endTimeUtc": "2026-08-06T03:14:59Z",
+          "workingDirectory": {
+            "uri": "file:///home/greentea/Documents/NicaSecurity/DevSecOps/dso-demo"
+          }
+        }
+      ],
+      "properties": {
+        "metrics": {
+          "total": 0,
+          "critical": 0,
+          "high": 0,
+          "medium": 0,
+          "low": 0
+        }
+      },
+      "results": [],
+      "automationDetails": {
+        "description": {
+          "text": "Static Analysis Security Test results using @ShiftLeft/sast-scan"
+        },
+        "guid": "1148d78f-7671-445d-aa80-d59060a03132"
+      },
+      "versionControlProvenance": [
+        {
+          "branch": "main",
+          "repositoryUri": "https://github.com/jesse0099/dso-demo",
+          "revisionId": "febaaa309ef8cc0da7e5d3bf81f121610f41108b"
+        }
+      ]
+    }
+  ],
+  "version": "2.1.0",
+  "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
+  "inlineExternalProperties": [
+    {
+      "guid": "1148d78f-7671-445d-aa80-d59060a03132",
+      "runGuid": "c4212b57-8e2e-4b07-b506-db0d2454d704"
+    }
+  ]
+}
